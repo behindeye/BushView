@@ -51,8 +51,12 @@ public class BushView extends View {
     private void init() {
         tape = BitmapFactory.decodeResource(getResources(), R.drawable.paint_type);
         float radio = (float) tape.getWidth() / tape.getHeight();
-        tape = Bitmap.createScaledBitmap(tape, (int) (100 * radio), 100, false);
+        tape = Bitmap.createScaledBitmap(tape, (int) (100 * radio), 100, true);
         slop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
+        p = new Paint();
+        p.setAntiAlias(true);
+        p.setDither(true);
+        p.setFilterBitmap(true);
     }
 
     @Override
@@ -83,7 +87,7 @@ public class BushView extends View {
         canvas.rotate((float) degree, startX, startY);
         canvas.clipRect(r);
         for (RectF dist : mList) {
-            canvas.drawBitmap(bitmap, null, dist, null);
+            canvas.drawBitmap(bitmap, null, dist, p);
         }
         canvas.restore();
     }
